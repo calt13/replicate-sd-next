@@ -2,11 +2,11 @@ export default async function handler(req, res) {
   const authHeader = req.headers.authorization;
   const validAccessCode = process.env.ACCESS_CODE;
 
-  // if (!authHeader || authHeader !== `Bearer ${validAccessCode}`) {
-  //   res.statusCode = 401;
-  //   res.end(JSON.stringify({ message: "Unauthorized" }));
-  //   return;
-  // }
+  if (!authHeader || authHeader !== `Bearer ${validAccessCode}`) {
+    res.statusCode = 401;
+    res.end(JSON.stringify({ message: "Unauthorized" }));
+    return;
+  }
 
   const response = await fetch("https://api.replicate.com/v1/predictions", {
     method: "POST",
